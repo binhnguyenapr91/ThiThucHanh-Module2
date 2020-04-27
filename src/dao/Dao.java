@@ -3,6 +3,7 @@ package dao;
 import model.Contact;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class Dao {
@@ -42,5 +43,30 @@ public class Dao {
             fw.close();
         }
 
+    }
+
+    public ArrayList<Contact> readFromFile(String dataFilePath) {
+        ArrayList<Contact> contacts = new ArrayList<>();
+        BufferedReader br = null;
+        try{
+            String line;
+            br = new BufferedReader(new FileReader(dataFilePath));
+            while ((line = br.readLine()) != null) {
+                String[] splitData = line.split(",");
+                String name = splitData[0];
+                String number = splitData[1];
+                String group = splitData[2];
+                String gender = splitData[3];
+                String dob = splitData[4];
+                String address = splitData[5];
+                String email = splitData[6];
+                contacts.add(new Contact(name,number,group,gender,dob,address,email));
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return contacts;
     }
 }
